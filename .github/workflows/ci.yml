@@ -6,11 +6,6 @@ on:
       - development
   pull_request:
   workflow_call:
-    inputs:
-      repository:
-        default: desktop/desktop
-        required: false
-        type: string
       ref:
         required: true
         type: string
