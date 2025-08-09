@@ -44,7 +44,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: ${{ inputs.repository || github.repository }}
+          repository: ${{ inputs.repository || 'phoenixprojectsoftware/Custodian' }}
           ref: ${{ inputs.ref }}
           submodules: recursive
       - uses: actions/setup-node@v4
@@ -57,6 +57,7 @@ jobs:
       - run: yarn validate-changelog
       - name: Ensure a clean working directory
         run: git diff --name-status --exit-code
+
   build:
     name: ${{ matrix.friendlyName }} ${{ matrix.arch }}
     runs-on: ${{ matrix.os }}
@@ -79,7 +80,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: ${{ inputs.repository || github.repository }}
+          repository: ${{ inputs.repository || 'phoenixprojectsoftware/Custodian' }}
           ref: ${{ inputs.ref }}
           submodules: recursive
       - uses: actions/setup-python@v5
@@ -104,8 +105,7 @@ jobs:
         run: yarn build:prod
         env:
           DESKTOP_OAUTH_CLIENT_ID: ${{ secrets.DESKTOP_OAUTH_CLIENT_ID }}
-          DESKTOP_OAUTH_CLIENT_SECRET:
-            ${{ secrets.DESKTOP_OAUTH_CLIENT_SECRET }}
+          DESKTOP_OAUTH_CLIENT_SECRET: ${{ secrets.DESKTOP_OAUTH_CLIENT_SECRET }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
           APPLE_ID_PASSWORD: ${{ secrets.APPLE_ID_PASSWORD }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
@@ -145,9 +145,9 @@ jobs:
         with:
           name: ${{matrix.friendlyName}}-${{matrix.arch}}
           path: |
-            dist/GitHub Desktop-${{matrix.arch}}.zip
-            dist/GitHubDesktop-*.nupkg
-            dist/GitHubDesktopSetup-${{matrix.arch}}.exe
-            dist/GitHubDesktopSetup-${{matrix.arch}}.msi
+            dist/Custodian-${{matrix.arch}}.zip
+            dist/Custodian-*.nupkg
+            dist/CustodianSetup-${{matrix.arch}}.exe
+            dist/CustodianSetup-${{matrix.arch}}.msi
             dist/bundle-size.json
           if-no-files-found: error
